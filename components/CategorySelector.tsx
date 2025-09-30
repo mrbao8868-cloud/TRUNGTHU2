@@ -11,7 +11,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({ categories, selecte
   return (
     <div className="w-full mx-auto">
       <h2 className="text-xl font-bold text-center text-yellow-300 mb-4">2. Chọn chủ đề</h2>
-      <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2">
+      <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-7 lg:grid-cols-8 gap-3">
         {categories.map((category) => {
           const isSelected = category.id === selectedCategoryId;
           return (

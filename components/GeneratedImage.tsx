@@ -8,7 +8,7 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({ imageUrl }) => {
   if (!imageUrl) return null;
 
   return (
-    <div className="w-full max-w-xl mx-auto mt-6 flex flex-col items-center">
+    <div className="w-full max-w-xl mx-auto mt-6 flex flex-col items-center animate-fade-in">
         <h2 className="text-2xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-400 mb-4">Tác phẩm của bạn!</h2>
         <div className="relative group p-1 bg-gradient-to-br from-yellow-400 via-orange-500 to-yellow-600 rounded-xl shadow-2xl shadow-yellow-500/20">
             <img src={imageUrl} alt="Generated Mid-Autumn" className="rounded-lg" />

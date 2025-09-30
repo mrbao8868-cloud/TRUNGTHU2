@@ -1,12 +1,6 @@
 
 import { GoogleGenAI, Modality } from "@google/genai";
 
-if (!process.env.API_KEY) {
-  throw new Error("API_KEY environment variable is not set");
-}
-
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 const fileToGenerativePart = async (file: File) => {
   const base64EncodedDataPromise = new Promise<string>((resolve) => {
     const reader = new FileReader();
@@ -29,6 +23,14 @@ const fileToGenerativePart = async (file: File) => {
 };
 
 export const generateMidAutumnImage = async (imageFile: File, prompt: string): Promise<string> => {
+  if (!process.env.API_KEY) {
+    const errorMessage = "Lỗi Cấu Hình Máy Chủ: Khóa API chưa được thiết lập. Vui lòng kiểm tra lại cấu hình trên Vercel.";
+    console.error("API_KEY environment variable is not set. Ensure it's configured in your Vercel project settings. For security, API keys should be handled on a server, not exposed to the browser. Consider using a serverless function as a proxy for the Gemini API call in production.");
+    throw new Error(errorMessage);
+  }
+
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
   try {
     const imagePart = await fileToGenerativePart(imageFile);
     const textPart = { text: prompt };
