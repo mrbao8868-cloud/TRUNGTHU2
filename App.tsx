@@ -3,6 +3,7 @@ import ImageUploader from './components/ImageUploader';
 import CategorySelector from './components/CategorySelector';
 import GeneratedImage from './components/GeneratedImage';
 import Loader from './components/Loader';
+import ErrorMessage from './components/ErrorMessage';
 import { CATEGORIES } from './constants';
 import { generateMidAutumnImage } from './services/geminiService';
 
@@ -23,10 +24,14 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  const isQuotaError = useMemo(() => error?.includes("giới hạn sử dụng") ?? false, [error]);
+
   const handleImageUpload = (file: File) => {
     setUploadedImageFile(file);
     setGeneratedImageUrl(null);
-    setError(null);
+    if (!isQuotaError) {
+      setError(null);
+    }
     setSelectedCategoryId(null);
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -64,8 +69,8 @@ const App: React.FC = () => {
   };
   
   const isGenerateButtonDisabled = useMemo(() => {
-      return !uploadedImageFile || !selectedCategoryId || isLoading;
-  }, [uploadedImageFile, selectedCategoryId, isLoading]);
+      return !uploadedImageFile || !selectedCategoryId || isLoading || isQuotaError;
+  }, [uploadedImageFile, selectedCategoryId, isLoading, isQuotaError]);
 
   return (
     <div className="min-h-screen text-white font-sans p-4 relative z-10">
@@ -122,7 +127,7 @@ const App: React.FC = () => {
 
           {/* ----- Right Column: Output ----- */}
           <div className="flex flex-col items-center justify-start">
-             {error && <p className="w-full text-center text-red-400 bg-red-900/50 p-3 rounded-lg mb-4">{error}</p>}
+             {error && <ErrorMessage message={error} />}
             
              <div className="w-full h-full flex items-center justify-center">
               {isLoading ? (
