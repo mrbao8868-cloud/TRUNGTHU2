@@ -100,7 +100,7 @@ const App: React.FC = () => {
             </div>
 
             {uploadedImagePreview && (
-              <div className="p-4 rounded-2xl glassmorphism glow-shadow">
+              <div className="p-4 rounded-2xl glassmorphism glow-shadow animate-fade-in">
                   <CategorySelector 
                   categories={CATEGORIES}
                   selectedCategoryId={selectedCategoryId}
@@ -110,7 +110,7 @@ const App: React.FC = () => {
             )}
             
             {uploadedImagePreview && selectedCategoryId && (
-              <div className="text-center pt-2">
+              <div className="text-center pt-2 animate-fade-in">
                 <button
                   onClick={handleGenerateClick}
                   disabled={isGenerateButtonDisabled}

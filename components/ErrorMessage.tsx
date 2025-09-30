@@ -26,7 +26,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
                 <div className="flex flex-col items-center justify-center">
                     <QuotaErrorIcon />
                     <h3 className="mt-3 text-xl font-bold text-yellow-300">Đã hết lượt sử dụng trong ngày</h3>
-                    <p className="mt-2 text-sm text-gray-300 max-w-md">{message}</p>
+                    <p className="mt-2 text-sm text-gray-300 max-w-md">{message.replace("Rất tiếc, bạn đã đạt giới hạn sử dụng trong ngày. ", "")}</p>
                 </div>
             </div>
         );
