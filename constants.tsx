@@ -1,5 +1,5 @@
 import React from 'react';
-import { Category, AspectRatio } from './types';
+import { Category } from './types';
 
 const LanternIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 20s-2 2-2 3-2-3-2-3H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.71 1.2a2 2 0 0 0 1.69.9H18a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4Z"></path><path d="M12 20v-4"></path><path d="M6 5V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1"></path></svg>
@@ -317,38 +317,5 @@ export const CATEGORIES: Category[] = [
     name: 'Hóa trang cổ tích',
     prompt: `${FACE_PRESERVATION_PROMPT} transform the person from the photo by dressing them up as a character from a famous Vietnamese Mid-Autumn legend, such as Thằng Bờm or a fairy, in elaborate and beautiful costumes. The background should be a theatrical, fantastical setting that matches the character's story. ${PHOTOREALISTIC_STYLE_PROMPT}`,
     icon: <CosplayIcon />,
-  },
-];
-
-const SquareIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
-);
-
-const PortraitIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="2" width="12" height="20" rx="2" ry="2"></rect></svg>
-);
-
-const LandscapeIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="6" width="20" height="12" rx="2" ry="2"></rect></svg>
-);
-
-export const ASPECT_RATIOS: AspectRatio[] = [
-  {
-    id: '1:1',
-    name: 'Vuông 1:1',
-    promptSuffix: 'The final image must be in a 1:1 square aspect ratio.',
-    icon: <SquareIcon />,
-  },
-  {
-    id: '9:16',
-    name: 'Dọc 9:16',
-    promptSuffix: 'The final image must be in a 9:16 portrait aspect ratio.',
-    icon: <PortraitIcon />,
-  },
-  {
-    id: '16:9',
-    name: 'Ngang 16:9',
-    promptSuffix: 'The final image must be in a 16:9 landscape aspect ratio.',
-    icon: <LandscapeIcon />,
   },
 ];

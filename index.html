@@ -38,6 +38,13 @@
       .animate-pulse-strong {
         animation: pulse 2s infinite;
       }
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.6; }
+      }
+      .animate-blink {
+        animation: blink 1.5s infinite ease-in-out;
+      }
     </style>
   <script type="importmap">
 {
