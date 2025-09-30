@@ -6,6 +6,15 @@ import Loader from './components/Loader';
 import { CATEGORIES } from './constants';
 import { generateMidAutumnImage } from './services/geminiService';
 
+const HeaderIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-yellow-300 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)] inline-block align-middle">
+        <path d="M14 20s-2 2-2 3-2-3-2-3H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.71 1.2a2 2 0 0 0 1.69.9H18a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-4Z"></path>
+        <path d="M12 20v-4"></path>
+        <path d="M6 5V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1"></path>
+    </svg>
+);
+
+
 const App: React.FC = () => {
   const [uploadedImageFile, setUploadedImageFile] = useState<File | null>(null);
   const [uploadedImagePreview, setUploadedImagePreview] = useState<string | null>(null);
@@ -59,11 +68,11 @@ const App: React.FC = () => {
   }, [uploadedImageFile, selectedCategoryId, isLoading]);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white font-sans p-4">
+    <div className="min-h-screen text-white font-sans p-4 relative z-10">
       <div className="container mx-auto max-w-7xl">
         <header className="text-center mb-8">
             <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-400 to-yellow-400 mb-2 drop-shadow-[0_2px_5px_rgba(251,191,36,0.3)]">
-            Trình Tạo Ảnh Trung Thu AI
+              <HeaderIcon /> Trình Tạo Ảnh Trung Thu AI
             </h1>
             <p className="text-base text-gray-300 max-w-2xl mx-auto">Biến bức ảnh chân dung của bạn thành một khoảnh khắc Trung thu diệu kỳ chỉ với vài cú nhấp chuột!</p>
         </header>
@@ -71,7 +80,7 @@ const App: React.FC = () => {
         <main className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* ----- Left Column: Controls ----- */}
           <div className="space-y-4 flex flex-col">
-            <div className="p-4 rounded-2xl bg-gray-800/30">
+            <div className="p-4 rounded-2xl glassmorphism glow-shadow">
               <h2 className="text-xl font-bold text-center text-yellow-300 mb-4">1. Tải ảnh của bạn lên</h2>
               <ImageUploader onImageUpload={handleImageUpload} previewUrl={uploadedImagePreview} />
               <div className="mt-4 max-w-lg mx-auto bg-gray-900/50 border border-yellow-600/30 rounded-lg p-3 text-center">
@@ -86,7 +95,7 @@ const App: React.FC = () => {
             </div>
 
             {uploadedImagePreview && (
-              <div className="p-4 rounded-2xl bg-gray-800/30">
+              <div className="p-4 rounded-2xl glassmorphism glow-shadow">
                   <CategorySelector 
                   categories={CATEGORIES}
                   selectedCategoryId={selectedCategoryId}
@@ -118,8 +127,8 @@ const App: React.FC = () => {
               ) : generatedImageUrl ? (
                 <GeneratedImage imageUrl={generatedImageUrl} />
               ) : (
-                <div className="w-full h-full min-h-[400px] flex flex-col items-center justify-center bg-gray-800/30 rounded-2xl p-4 text-gray-500 text-center border-2 border-dashed border-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                <div className="w-full h-full min-h-[400px] flex flex-col items-center justify-center glassmorphism glow-shadow rounded-2xl p-4 text-gray-500 text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24 mb-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     <h3 className="text-lg font-bold text-gray-400">Tác phẩm của bạn sẽ hiện ở đây</h3>
@@ -130,7 +139,7 @@ const App: React.FC = () => {
           </div>
         </main>
         
-        <footer className="text-center mt-12 text-gray-500 text-xs space-y-1">
+        <footer className="text-center mt-12 pt-8 border-t border-gray-700/50 text-gray-500 text-xs space-y-1">
             <p>Phát triển bởi Thầy Giới - Chuyên gia chuyển đổi số <span className="animate-blink font-bold text-yellow-300">0972300864</span></p>
             <p>Được tạo bởi AI. Chúc bạn một mùa Trung thu vui vẻ và ấm áp!</p>
         </footer>

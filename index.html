@@ -11,9 +11,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
       body {
-        background-color: #0d1117;
+        background-color: #000000;
         background-image: radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.1), transparent 50%);
         font-family: 'Be Vietnam Pro', sans-serif;
+        overflow-x: hidden;
       }
       .glow-shadow {
         box-shadow: 0 0 15px rgba(251, 191, 36, 0.3), 0 0 30px rgba(251, 191, 36, 0.2);
@@ -45,6 +46,47 @@
       .animate-blink {
         animation: blink 1.5s infinite ease-in-out;
       }
+
+      /* Glassmorphism Effect */
+      .glassmorphism {
+        background: rgba(17, 24, 39, 0.4);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      
+      /* Fade In Animation */
+      @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+      }
+      .animate-fade-in {
+          animation: fadeIn 0.5s ease-out forwards;
+      }
+
+      /* Stars Background Effect */
+      @keyframes move-twink-back {
+          from {background-position:0 0;}
+          to {background-position:-10000px 5000px;}
+      }
+      .stars-bg {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: -1;
+      }
+      #stars1 {
+          background: transparent url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfiCh8QBg52B91eAAABp0lEQVRIx+3VzStEURjA8d8vWbJkYyNlS1ZMrCz5HyysLEtWSLz/gU2UJSspY2NkY2VjY2VjY2VjY2VjYyMJeScp4rvz3nN/9/ee837nPGfOOfY/L25YtahXg2bQwxBD01lDU0dDT0dNT0dRT4eZA6xjiGMscYxJzHEVMMdZxzp2ccY97vGAnY117GCHQ9zjAdfYyhr2sIMj7GEPC9jBHjYxgz3sYwn72MYWtrCDDexhD0vYwx52sYcV7GEPa9jDHnawhx3sYQ8b2MMeNrGHPWxhD3vYwRa2sIc97GANe9jDHrawhz3sYQN72MMeNrCHLaxhD3vYwxf3sYQ872MMeNrCHHWxhD3vYwx72sIM97GEPW9jDHjawhz3sYQ9b2MMeNrGHvexjD/tYwh72sYctrGENe9jBDrYwhT3sYQ+72MMeNrCHPWxhD3vYww52sIMtbGEPe9jBDrYwhz3sYQ872MMeNrCHPWxhD/s/9v6Bv/4Cv4N/vwTe/gE+A0/gU3VzPrUAAAAASUVORK5CYII=') repeat top center;
+          z-index: 0;
+          animation: move-twink-back 200s linear infinite;
+      }
+      #stars2 {
+          background: transparent url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQfiCh8QBg52B91eAAABK0lEQVRIx+3WywsBURjA8V8sWQhZ8i8sWCkbspZki4UsWbJkyZIlS7YkWbJkyZJFixYtWpxL3s455/zm/M983/eZ85wz9z+w2b17A16wimFc4BEjLGF3hGvM4xl72MMONrCFvexjD/vYwx72sYc97GELW9jCDnawhS1sYQ872MMe9rCHLWxhBzvYwRb2sIMd7GALW9jCHnawhz3sYQ872MMe9rCHLWxhBzvYwRa2sIMd7GANW9jCHnawg21sYQ872MMe9rCHLWxhBzvYwRb2sIMd7GANW9jCHnawg21sYQ872MMe9rCHLWxhBzvYwRa2sIMd7GANW9jCHnawhT1sYQ872MMe9rCHLWxhBzvYwRa2sIMd7GAN+w8O8IUd7GIXe9jDHzYwjg1sYQ872MEONrCFvexjD/vYwz72sYcN7GED29jCHvYwgw1sYQ872MEONrCF/Qe/A2/A82sDKIA8AAAAAElFTkSuQmCC') repeat top center;
+          z-index: 1;
+          animation: move-twink-back 150s linear infinite;
+      }
     </style>
   <script type="importmap">
 {
@@ -56,8 +98,13 @@
   }
 }
 </script>
+<link rel="stylesheet" href="/index.css">
 </head>
   <body>
+    <div class="stars-bg">
+      <div id="stars1"></div>
+      <div id="stars2"></div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>
