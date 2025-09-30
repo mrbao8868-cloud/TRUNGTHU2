@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF--8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trình Tạo Ảnh Trung Thu AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      body {
+        background-color: #0d1117;
+        background-image: radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.1), transparent 50%);
+        font-family: 'Be Vietnam Pro', sans-serif;
+      }
+      .glow-shadow {
+        box-shadow: 0 0 15px rgba(251, 191, 36, 0.3), 0 0 30px rgba(251, 191, 36, 0.2);
+      }
+      @keyframes glow {
+        0%, 100% { box-shadow: 0 0 15px rgba(251, 191, 36, 0.3); }
+        50% { box-shadow: 0 0 30px rgba(251, 191, 36, 0.6); }
+      }
+      .animate-glow {
+        animation: glow 2.5s infinite ease-in-out;
+      }
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+          box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+        50% {
+          transform: scale(1.05);
+          box-shadow: 0 0 25px rgba(251, 191, 36, 0.8);
+        }
+      }
+      .animate-pulse-strong {
+        animation: pulse 2s infinite;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.21.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
