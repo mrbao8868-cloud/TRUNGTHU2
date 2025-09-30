@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Modality } from "@google/genai";
 
 const fileToGenerativePart = async (file: File) => {
@@ -81,9 +80,15 @@ export const generateMidAutumnImage = async (imageFile: File, prompt: string): P
 
   } catch (error) {
     console.error("Lỗi khi gọi Gemini API:", error);
-    if (error instanceof Error) {
-        throw new Error(`Đã xảy ra lỗi: ${error.message}`);
+    if (error instanceof Error && error.message) {
+      // Specific handling for Quota errors (HTTP 429)
+      if (error.message.includes('429') || error.message.includes('RESOURCE_EXHAUSTED') || error.message.includes('quota exceeded')) {
+        throw new Error("Lỗi Hết Hạn Ngạch: Bạn đã sử dụng hết số lượt tạo ảnh miễn phí. Vui lòng thử lại sau.");
+      }
+      // For other errors, provide a generic message instead of the raw technical one.
+      throw new Error("Đã xảy ra lỗi trong quá trình tạo ảnh. Vui lòng thử lại.");
     }
-    throw new Error("Không thể tạo ảnh. Vui lòng thử lại sau.");
+    // Fallback for unknown errors
+    throw new Error("Không thể tạo ảnh. Đã xảy ra lỗi không xác định. Vui lòng thử lại sau.");
   }
 };
