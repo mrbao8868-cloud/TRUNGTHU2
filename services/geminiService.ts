@@ -83,7 +83,7 @@ export const generateMidAutumnImage = async (imageFile: File, prompt: string): P
     if (error instanceof Error && error.message) {
       // Specific handling for Quota errors (HTTP 429)
       if (error.message.includes('429') || error.message.includes('RESOURCE_EXHAUSTED') || error.message.includes('quota exceeded')) {
-        throw new Error("Lỗi Hết Hạn Ngạch: Bạn đã sử dụng hết số lượt tạo ảnh miễn phí. Vui lòng thử lại sau.");
+        throw new Error("Rất tiếc, bạn đã đạt giới hạn sử dụng trong ngày. Dịch vụ AI cung cấp một lượng sử dụng miễn phí nhất định mỗi ngày. Vui lòng quay lại vào ngày mai để tiếp tục sáng tạo nhé!");
       }
       // For other errors, provide a generic message instead of the raw technical one.
       throw new Error("Đã xảy ra lỗi trong quá trình tạo ảnh. Vui lòng thử lại.");

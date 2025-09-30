@@ -113,6 +113,9 @@ const App: React.FC = () => {
                 >
                   {isLoading ? 'Đang xử lý...' : 'Tạo ảnh ngay!'}
                 </button>
+                <p className="text-xs text-gray-500 mt-2">
+                    Lưu ý: Dịch vụ AI có giới hạn lượt tạo ảnh miễn phí mỗi ngày.
+                </p>
               </div>
             )}
           </div>
