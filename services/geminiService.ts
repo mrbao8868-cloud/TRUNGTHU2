@@ -1,94 +1,33 @@
-import { GoogleGenAI, Modality } from "@google/genai";
-
-const fileToGenerativePart = async (file: File) => {
-  const base64EncodedDataPromise = new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      if (typeof reader.result === 'string') {
-        resolve(reader.result.split(',')[1]);
-      } else {
-        reject(new Error("Không thể đọc tệp hình ảnh."));
-      }
-    };
-    reader.onerror = () => {
-        reject(new Error("Đã xảy ra lỗi khi đọc tệp."));
-    };
-    reader.readAsDataURL(file);
-  });
-  const data = await base64EncodedDataPromise;
-  return {
-    inlineData: {
-      data,
-      mimeType: file.type,
-    },
-  };
-};
-
 export const generateMidAutumnImage = async (imageFile: File, prompt: string): Promise<string> => {
-  if (!process.env.API_KEY) {
-    const errorMessage = "Lỗi Cấu Hình Máy Chủ: Khóa API chưa được thiết lập. Vui lòng kiểm tra lại cấu hình trên Vercel.";
-    console.error("API_KEY environment variable is not set. Ensure it's configured in your Vercel project settings. For security, API keys should be handled on a server, not exposed to the browser. Consider using a serverless function as a proxy for the Gemini API call in production.");
-    throw new Error(errorMessage);
-  }
-
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const formData = new FormData();
+  formData.append('image', imageFile);
+  formData.append('prompt', prompt);
 
   try {
-    const imagePart = await fileToGenerativePart(imageFile);
-    const textPart = { text: prompt };
-
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-image',
-      contents: {
-        parts: [imagePart, textPart],
-      },
-      config: {
-        responseModalities: [Modality.IMAGE, Modality.TEXT],
-      },
+    const response = await fetch('/api/generate', {
+      method: 'POST',
+      body: formData,
     });
 
-    if (!response.candidates || response.candidates.length === 0) {
-        const blockReason = response.promptFeedback?.blockReason;
-        if (blockReason) {
-             throw new Error(`Yêu cầu của bạn đã bị chặn vì lý do: ${blockReason}. Vui lòng thử lại với ảnh hoặc chủ đề khác.`);
-        }
-        throw new Error("AI không trả về kết quả. Vui lòng thử lại.");
-    }
+    // Phân tích cú pháp phản hồi JSON từ backend
+    const result = await response.json();
 
-    let generatedImageUrl: string | null = null;
-    let textResponse: string | null = null;
-
-    for (const part of response.candidates[0].content.parts) {
-      if (part.inlineData) {
-        const base64ImageBytes = part.inlineData.data;
-        const mimeType = part.inlineData.mimeType;
-        generatedImageUrl = `data:${mimeType};base64,${base64ImageBytes}`;
-      } else if (part.text) {
-        textResponse = part.text;
-      }
+    if (!response.ok) {
+      // Nếu có lỗi, backend sẽ trả về một đối tượng JSON với key 'error'
+      // Ném lỗi với thông báo từ backend để UI có thể hiển thị nó
+      throw new Error(result.error || 'Đã xảy ra lỗi không xác định từ máy chủ.');
     }
     
-    if (generatedImageUrl) {
-        return generatedImageUrl;
-    }
-
-    if (textResponse) {
-        throw new Error(`AI không thể tạo ảnh và đã phản hồi: "${textResponse}"`);
-    }
-
-    throw new Error("Không nhận được ảnh từ AI. Phản hồi không chứa dữ liệu hình ảnh.");
+    // Nếu thành công, backend sẽ trả về một đối tượng JSON với key 'imageUrl'
+    return result.imageUrl;
 
   } catch (error) {
-    console.error("Lỗi khi gọi Gemini API:", error);
-    if (error instanceof Error && error.message) {
-      // Specific handling for Quota errors (HTTP 429)
-      if (error.message.includes('429') || error.message.includes('RESOURCE_EXHAUSTED') || error.message.includes('quota exceeded')) {
-        throw new Error("Rất tiếc, bạn đã đạt giới hạn sử dụng trong ngày. Dịch vụ AI cung cấp một lượng sử dụng miễn phí nhất định mỗi ngày. Vui lòng quay lại vào ngày mai để tiếp tục sáng tạo nhé!");
-      }
-      // For other errors, provide a generic message instead of the raw technical one.
-      throw new Error("Đã xảy ra lỗi trong quá trình tạo ảnh. Vui lòng thử lại.");
+    console.error("Lỗi khi gọi API backend:", error);
+    // Ném lại lỗi để component App có thể bắt và xử lý
+    if (error instanceof Error) {
+      throw error;
     }
-    // Fallback for unknown errors
-    throw new Error("Không thể tạo ảnh. Đã xảy ra lỗi không xác định. Vui lòng thử lại sau.");
+    // Lỗi dự phòng
+    throw new Error("Không thể kết nối đến máy chủ tạo ảnh. Vui lòng kiểm tra lại kết nối mạng.");
   }
 };
