@@ -38,7 +38,7 @@ export const generateMidAutumnImage = async (imageFile: File, prompt: string): P
     const textPart = { text: prompt };
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-image-preview',
+      model: 'gemini-2.5-flash-image',
       contents: {
         parts: [imagePart, textPart],
       },

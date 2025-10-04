@@ -139,7 +139,7 @@ const CosplayIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m14 4 4 4"/><path d="M12 20-3 9l4-4 2 2 4-4 2 2 4-4 3 9L12 20z"/><path d="m2 22 2-2"/></svg>
 );
 
-const FACE_PRESERVATION_PROMPT = "CRITICAL PRIORITY: The face of the person in the final image must be an EXACT, photorealistic match to the face in the uploaded photo. Preserve every facial feature, likeness, and expression with perfect accuracy. This is the most important instruction. After ensuring an identical face,";
+const FACE_PRESERVATION_PROMPT = "HIGHEST PRIORITY: The person's face in the final image MUST be an EXACT, 1:1, photorealistic copy of the face in the uploaded photo. Do NOT alter, change, or stylize the facial features, structure, or identity in any way. Maintain 100% likeness. This is the most critical instruction. After perfectly preserving the face,";
 const PHOTOREALISTIC_STYLE_PROMPT = "The final image must be an ultra-realistic, highly detailed 8K photograph. It should look like a real photo taken with a professional camera, not a digital painting or illustration. Focus on natural cinematic lighting, realistic textures, and sharp details.";
 
 
